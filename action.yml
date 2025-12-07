@@ -1,16 +1,37 @@
 name: 'check-version-before-release'
 description: 'Asserts package version is the same or higher than latest published'
 author: 'Digital Catapult'
-icon: 'check-circle'
-color: 'red'
+branding:
+  icon: 'check-circle'
+  color: 'red'
 inputs:
+  package_manager:
+    required: false
+    description: 'specifies a package manager so we can select a path to use'
+    default: 'npm'
+  cargo_package_location:
+    required: false
+    description: 'path to files'
+    default: './'
   npm_package_location:
-    required: true
+    required: false
+    description: 'path to files'
+    default: './'
+  poetry_package_location:
+    required: false
     description: 'path to files'
     default: './'
   token:
     description: 'The token to use to access the GitHub API'
     required: true
+  fail_on_same_version:
+    description: 'Should action fail if the version matches the latest published'
+    required: false
+    default: 'true'
+  tag_regex:
+    description: 'Regular expression for filtering tags'
+    required: false
+    default: '\d+.\d+.\d+'
 outputs:
   is_new_version:
     description: 'boolean indicating if this is a new version true = yes '
@@ -20,7 +41,9 @@ outputs:
     description: 'date of the build'
   is_prerelease:
     description: 'boolean indicating if this is a prerelease true = yes '
+  npm_release_tag:
+    description: 'release tag for npm packages. `latest` or `next`'
 
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: 'node24'
+  main: 'dist/index.mjs'

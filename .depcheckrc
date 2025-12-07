@@ -1,5 +1,7 @@
 {
   "ignores": [
-    "@tsconfig/node12"
+    "@swc-node/register",
+    "@swc/cli",
+    "@swc/core"
   ]
 }
